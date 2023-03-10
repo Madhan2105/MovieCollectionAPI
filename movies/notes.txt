@@ -1,0 +1,12 @@
+add validation in serializer
+
+
+
+
+Is your code actually doing what is asked in the assignment? Yes
+Is your code clean and modular? Are you cleanly factoring your views to keep most of the code outside of views?
+Does your counter implementation work in parallel execution of code?
+Is your code following PEP8 code formatting guidelines?
+Have you followed Django development best practices?
+Have you added tests for your code? You can use Factory boy for generating fixtures. Are meaningful assertions present in your tests?
+Is your requirements file updated with all requirements?
