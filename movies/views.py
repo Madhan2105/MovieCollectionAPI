@@ -13,6 +13,8 @@ load_dotenv()
 
 
 class Movies(APIView):
+    permission_classes = (IsAuthenticated,)
+
     def get(self, request, format=None):
         page = "?page="+request.query_params.get('page') \
             if request.query_params.get('page') else ""
