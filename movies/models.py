@@ -22,5 +22,5 @@ class Collection(models.Model):
     is_active = models.IntegerField(default=1)
 
     def __repr__(self) -> str:
-        resp = "collection_uuid is "+self.id
+        resp = "collection_uuid is "+str(self.id)
         return resp

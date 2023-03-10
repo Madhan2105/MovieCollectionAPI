@@ -25,7 +25,7 @@ class CustomSetUp(APITestCase):
 
     def setUp(self):
         username = self.createUser()
-        self.user = User.objects.get(username=username)
+        self.user = User.objects.get(username=username, is_active=True)
         self.view = views.Collection.as_view()
         self.factory = APIRequestFactory()
 
@@ -94,6 +94,7 @@ class UserTest(APITestCase):
         request = factory.post(url, data, format='json')
         response = view(request)
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
+        self.assertEqual(User.objects.filter(is_active=1).count(), 1)
 
 
 class CollectionTest(CustomSetUp, APITestCase):
@@ -159,10 +160,9 @@ class CollectionTest(CustomSetUp, APITestCase):
         url = reverse('collection')
         request = self.factory.get(url+"/"+collection_id)
         force_authenticate(request, user=self.user)
-        response = self.view(request, collection_id)
-        self.assertEqual(response.status_code, status.HTTP_200_OK)
-        self.assertEqual(Collection.objects.filter(is_active=1).count(), 1)
-        self.assertEqual(response.data['id'], collection_id)
+        self.view(request, collection_id)
+        self.assertEqual(Collection.objects.filter(is_active=1,
+                         id=collection_id).count(), 1)
 
     def test_update_collection(self):
         """

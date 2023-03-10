@@ -47,12 +47,15 @@ class Collection(APIView):
             raise Http404
 
     def get(self, request, pk=None, format=None):
+        u = request.user
         if (pk):
-            collection = self.get_object(pk)
-            serializer = CollectionSerializer(collection)
+            collection = CollectionModel.objects.filter(collection_user=u.id,
+                                                        is_active=1, id=pk)
+            if (not collection):
+                raise Http404
+            serializer = CollectionSerializer(collection, many=True)
         else:
             context = {"show_fav_genres": True}
-            u = request.user
             collection = CollectionModel.objects.filter(collection_user=u.id,
                                                         is_active=1)
             serializer = CollectionSerializer(collection, many=True,
