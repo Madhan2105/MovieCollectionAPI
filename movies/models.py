@@ -3,13 +3,15 @@ import uuid
 from django.contrib.auth.models import User
 from django.core.validators import MinLengthValidator
 
+
 # Create your models here.
 class Collection(models.Model):
     id = models.UUIDField(primary_key=True,
                           default=uuid.uuid4, editable=False)
     collection_user = models.ForeignKey(User, related_name="collection_user",
                                         on_delete=models.CASCADE)
-    title = models.CharField(max_length=100,validators=[MinLengthValidator(4)])
+    title = models.CharField(max_length=100,
+                             validators=[MinLengthValidator(4)])
     description = models.TextField(validators=[MinLengthValidator(10)])
     movies = models.JSONField()
     created_by = models.IntegerField(unique=False)

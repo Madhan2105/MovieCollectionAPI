@@ -8,6 +8,7 @@ from django.http import Http404
 # Create your views here.
 class Counter(APIView):
     permission_classes = (IsAuthenticated,)
+
     def get(self, request):
         try:
             counter_data = CounterModel.objects.get(id=1)
